@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="images/login-logo.jpg" type="image/icon">
+    <link rel="stylesheet"  href="login.css">
+    <!-- <link rel="stylesheet"  href="style.css"> -->
+    <!-- <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"> -->
+    <link rel="stylesheet"  href="footer.css">
+    <title>Signup Contractor</title>
+
+    <!-- <script>  
+      function validateemail()  
+      {  
+      var x=document.regContractor.email.value;  
+      var atposition=x.indexOf("@");  
+      var dotposition=x.lastIndexOf(".");  
+      if (atposition<1 || dotposition<atposition+2 || dotposition+2>=x.length){  
+        alert("Please enter a valid e-mail address \n atpostion:"+atposition+"\n dotposition:"+dotposition);  
+        return false;  
+        } 
+      } 
+    < /script> -->
+</head>
+<body>
+    <section>
+        <div class="imgBx">
+            <img src="images/login-bg.jpeg">
+        </div>
+        <div class="contentBx">
+            <div class="formBx">
+                <h1>Contractor Signup </h1>
+                <form id='regContractor' enctype="multipart/form-data" method="POST">
+                    <div class="inputBx">
+                        <span><b><label><b> Username: </b></label></b></span>
+                        <input id="username" type="text" placeholder="Enter Userame" name="name" required="required">
+                    </div>
+
+                    <div class="inputBx">
+                        <span><b><label for="Mobile no"><b> Mobile No:</b></label></b></span> 
+                        <input type="tel" id="mobile-no" placeholder="Enter Number" name="mobile no" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" required>
+                        <small>Format: 123-456-7890</small>
+                    </div>
+
+                    <div class="inputBx">
+                        <span><b><label for="email"><b>Email:</b></label></b></span>
+                        <input id="email" type="text" placeholder="Enter Email" name="email" required>
+                    </div>
+
+                    <div class="inputBx">
+                        <span><b><label for="psw"><b>Password:</b></label></b></span>
+                        <input id="password" type="password" placeholder="Enter Password" name="psw" required>
+                    </div>
+
+
+                    <div class="remember">
+                        <label><h4>For verification please upload the proper identity documents:</h4>
+                        <p>You will require to pay Rs.100 for Registration. By creating an account you agree to our</p>
+                        </label>
+                    </div>
+                    </br>
+
+                    <div>
+  
+                    <input id="appliedTender" type="file" accept=".png, .jpeg, .pdf" required>
+                    </div><br>
+
+                    <input type="submit" value="Register-->" style="background-color:white; color:black;width: 130px; height: 50px; font-size: 15px;">
+                    
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+    <footer>
+      <div class="container">
+        <div class="sec aboutus">
+          <h2>About Us</h2>
+          <p>We, at The Tender Mines, are a global  service provider. Our main target audience will be the corporate world from all over the globe. As we will be on a global platform we will get the benefit of having a huge target audience..</p>
+          <ul class="sci">
+            <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+        <div class="sec quickLinks">
+          <h2> Quick Links</h2>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contactus.html">Help</a></li>
+            <li><a href="#">Terms And Conditions</a></li>
+            <li><a href="login_comapny.html">Login For Company</a></li>
+            <li><a href="login_contractor.html">Login For Contractor</a></li>
+          </ul>
+        </div>
+        <div class="sec contact">
+          <h2> Contact Us</h2>
+          <ul class="info">
+            <li>
+            <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+            <span>B-704 WallStreet-2 <br>Mumbai</span>
+            </li>
+            <li>
+            <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+            <p><a href="tel:1234567890">+91 1234567890</a></p>
+            </li>
+            <li>
+            <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            <p><a href=mailto:tendermines123@gmail.com>tendermines123@gmail.com</a></p>
+            </li>
+          </ul>
+                      
+      </div>
+    </footer>
+  
+    <script type="text/javascript">
+
+        //for uploading files
+        
+
+        const form = document.getElementById("regContractor")
+        form.addEventListener('submit', regContractor)
+
+        async function regContractor (event){
+        event.preventDefault()
+
+        const username = document.getElementById('username').value
+        const mobileNo = document.getElementById('mobile-no').value
+        const email = document.getElementById('email').value
+        const password = document.getElementById('password').value
+        // const appliedTender = document.getElementById('appliedTender').value
+
+        //file converting to binary
+            // var Binary = require('mongodb').Binary;
+            // var data = fs.readFileSync(appliedTender);
+            // var insert_data = {};
+            // insert_data.file_data= Binary(data);
+            // fileDataInBinary = insert_data.file_data;
+
+
+        const result = await fetch('/api/registerContractor', {
+          method: "POST",
+          headers : {
+            'Content-Type' : 'application/json'
+          },
+          body : JSON.stringify(
+          {
+            username,
+            mobileNo,
+            email,
+            // appliedTender,
+            password
+          })
+        }).then((res) => res.json())
+        if (result.status === 'ok') {
+            // everythign went fine
+            alert('Success')
+          } else {
+            alert(result.error)
+          }
+      }
+    </script>
+    
+</body>
+</html>

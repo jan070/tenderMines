@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="images/login-logo.jpg" type="image/icon">
+    <link rel="stylesheet"  href="login.css">
+    <link rel="stylesheet"  href="footer.css">
+    <title>Login</title>
+</head>
+<body>
+    <section>
+        <div class="imgBx">
+            <img src="images/login-bg.jpeg">
+        </div>
+        <div class="contentBx">
+            <div class="formBx">
+                <h1>Login</h1>
+                <form id='login-form' action="contractor_main.html" method="POST">
+                    <div class="inputBx">
+                        <span><b>Username</b></span>
+                        <!-- <div class="icon"></div> -->
+                        <input id="username" type="text" name="username" required="required">
+                    </div>
+                    <div class="inputBx">
+                        <!-- <div class="icon"></div> -->
+                        <span><b>Password</b></span> 
+                        <input id="password" type="password" name="password" required="required">
+                    </div>
+                    <div class="remember">
+                        <label><input type="checkbox" name="">Remember Me</label>
+                    </div>
+                    <div class="inputBx">
+                        <input type="submit" value="Sign in" name="">
+                    </div>
+                    <div class="inputBx">
+                        <p>Don't have an account? <a href="signup_contractor.html">Sign up</a></p>
+                    </div>
+                    <div class="inputBx">
+                        <p>Forgot Password? <a href="click here">Forgot Password</a></p>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </section>
+    <footer>
+		<div class="container">
+			<div class="sec aboutus">
+				<h2>About Us</h2>
+				<p>We, at The Tender Mines, are a global  service provider. Our main target audience will be the corporate world from all over the globe. As we will be on a global platform we will get the benefit of having a huge target audience..</p>
+				<ul class="sci">
+					<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+					<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+					<li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+			<div class="sec quickLinks">
+				<h2> Quick Links</h2>
+				<ul>
+					<li><a href="about.html">About</a></li>
+					<li><a href="contactus.html">Help</a></li>
+					<li><a href="#">Terms And Conditions</a></li>
+					<li><a href="login_comapny.html">Login For Company</a></li>
+					<li><a href="login_contractor.html">Login For Contractor</a></li>
+				</ul>
+			</div>
+			<div class="sec contact">
+				<h2> Contact Us</h2>
+				<ul class="info">
+				  <li>
+					<span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+					<span>B-704 WallStreet-2 <br>Mumbai</span>
+				  </li>
+				  <li>
+					<span><i class="fa fa-phone" aria-hidden="true"></i></span>
+					<p><a href="tel:1234567890">+91 1234567890</a></p>
+				  </li>
+				  <li>
+					<span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+					<p><a href=mailto:tendermines123@gmail.com>tendermines123@gmail.com</a></p>
+				  </li>
+				</ul>
+               			
+		</div>
+	</footer>
+	
+	<script type="text/javascript">
+		const form = document.getElementById("login-form")
+		form.addEventListener('submit', loginUser)
+
+		async function loginUser (event){
+			event.preventDefault()
+			const username = document.getElementById('username').value
+			const password = document.getElementById('password').value
+	
+			const result = await fetch('/api/loginContractor', {
+				method: "POST",
+				headers : {
+					'Content-Type' : 'application/json'
+				},
+				body : JSON.stringify(
+				{
+					username,
+					password
+				})
+			}).then((res) => res.json())
+			if (result.status === 'ok') {
+					// everythign went fine
+					location.replace("/api/contractor_main.html")
+					
+					alert('Success')
+			} else {
+				alert(result.error)
+			}
+		}
+	</script>
+    
+</body>
+</html>
